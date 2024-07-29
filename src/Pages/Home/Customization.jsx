@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as fabric from 'fabric';
 import { BASE_PRICE, MEDIUM_PRICE, HIGH_PRICE } from '../constants';
+import FinalView from './FinalView';
 
 const Customization = ({ imageUrl }) => {
 
@@ -15,6 +16,10 @@ const Customization = ({ imageUrl }) => {
     const [complexity, setComplexity] = useState('Basic');
     const [price, setPrice] = useState(BASE_PRICE);
     const [deleteButtonActive, setDeleteButtonActive] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false)
+    const [currrentPage, setCurrentPage] = useState('Customization')
+    const [colorInput, setColorInput] = useState('#000000'); // Default color
+    const [textInput, setTextInput] = useState('')
 
     useEffect(() => {
         if (complexity === 'Basic') {
@@ -27,84 +32,13 @@ const Customization = ({ imageUrl }) => {
     }, [complexity]);
 
     useEffect(() => {
-        console.log('Points : ' + totalPoints + '  and  Complexity is : ' + complexity);
-    }, [complexity, totalPoints]);
-
-    useEffect(() => {
         const fabricCanvas = new fabric.Canvas(canvasRef.current, {
             width: 500,
             height: 500,
             isDrawingMode: false,
             allowTouchScrolling: true,
         });
-        console.log(fabricCanvas)
         setCanvas(fabricCanvas);
-
-        //     fabric.Image.fromURL(imageUrl)
-        //         .then((oImg) => {
-        //             oImg.crossOrigin = 'anonymous';
-        //             oImg.lockScalingX = true;
-        //             oImg.lockScalingY = true;
-        //             oImg.lockMovementX = true;
-        //             oImg.lockMovementY = true;
-        //             oImg.hasControls = false;
-        //             oImg.evented = false;
-        //             oImg.src = imageUrl;
-        //             oImg.set({
-        //                 left: 0,
-        //                 top: 0,
-        //                 scaleX: fabricCanvas.width / oImg.width,
-        //                 scaleY: fabricCanvas.height / oImg.height,
-        //             });
-        //             console.log("oImg is here : " + oImg)
-        //             fabricCanvas.add(oImg);
-
-        //             const editableArea = new fabric.Rect({
-        //                 left: fabricCanvas.width * 0.25,
-        //                 top: fabricCanvas.height * 0.15,
-        //                 width: fabricCanvas.width * 0.5,
-        //                 height: fabricCanvas.height * 0.7,
-        //                 fill: 'rgba(255, 255, 255, 0)',
-        //                 stroke: '#e6e3e3',
-        //                 strokeWidth: 0.3,
-        //                 selectable: false,
-        //                 evented: false,
-        //                 name: 'editableArea'
-        //             });
-        //             fabricCanvas.add(editableArea);
-        //             fabricCanvas.renderAll();
-
-        //             fabricCanvas.on('object:moving', (e) => {
-        //                 if (e.target && e.target !== editableArea) {
-        //                     constrainObjectPosition(e.target, fabricCanvas, editableArea);
-        //                 }
-        //             });
-
-        //             fabricCanvas.on('object:scaling', (e) => {
-        //                 if (e.target && e.target !== editableArea) {
-        //                     constrainObjectSize(e.target, fabricCanvas, editableArea);
-        //                 }
-        //             });
-
-        //             fabricCanvas.on('object:modified', (e) => {
-        //                 if (e.target && e.target !== editableArea) {
-        //                     constrainObjectPosition(e.target, fabricCanvas, editableArea);
-        //                     constrainObjectSize(e.target, fabricCanvas, editableArea);
-        //                 }
-        //             });
-
-        //             fabricCanvas.on('selection:created', () => setDeleteButtonActive(true));
-        //             fabricCanvas.on('selection:cleared', () => setDeleteButtonActive(false));
-        //             fabricCanvas.on('selection:updated', () => setDeleteButtonActive(true));
-        //         })
-        //         .catch((error) => {
-        //             console.error("Error loading image:", error);
-        //         });
-
-        //     return () => {
-        //         fabricCanvas.dispose();
-        //     };
-        // }, [imageUrl]);
 
         const imgElement = new Image();
         imgElement.crossOrigin = 'anonymous';
@@ -159,16 +93,13 @@ const Customization = ({ imageUrl }) => {
             fabricCanvas.on('selection:cleared', () => setDeleteButtonActive(false));
             fabricCanvas.on('selection:updated', () => setDeleteButtonActive(true));
         };
-
         imgElement.onerror = (error) => {
             console.error("Error loading image:", error);
         };
-
         return () => {
             fabricCanvas.dispose();
         };
     }, [imageUrl]);
-
 
     const updatePoints = (points) => {
         setTotalPoints(totalPoints + points);
@@ -208,7 +139,6 @@ const Customization = ({ imageUrl }) => {
             alert('You can only add up to 2 triangles.');
             return;
         }
-
         const editableArea = canvas.getObjects('rect').find(r => r.name === 'editableArea');
         if (editableArea) {
             const triangle = new fabric.Triangle({
@@ -293,7 +223,7 @@ const Customization = ({ imageUrl }) => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const imgElement = new Image();
-                imgElement.crossOrigin = 'anonymous'; // Handle CORS
+                imgElement.crossOrigin = 'anonymous';
                 imgElement.src = `${e.target.result}`;
 
                 fabric.Image.fromURL(imgElement.src)
@@ -347,12 +277,10 @@ const Customization = ({ imageUrl }) => {
             right: editableArea.left + editableArea.width,
             bottom: editableArea.top + editableArea.height
         };
-
         obj.set({
             left: Math.max(bounds.left, Math.min(bounds.right - (obj.width * obj.scaleX || 0), obj.left)),
             top: Math.max(bounds.top, Math.min(bounds.bottom - (obj.height * obj.scaleY || 0), obj.top))
         });
-
         obj.setCoords();
         fabricCanvas.renderAll();
     };
@@ -429,63 +357,189 @@ const Customization = ({ imageUrl }) => {
         else setComplexity('High');
     };
 
-    const handleDownload = async () => {
+    const handleProceed = () => {
+        const editableArea = canvas.getObjects('rect').find(r => r.name === 'editableArea');
+        if (editableArea) {
+            editableArea.set('strokeWidth', 0);
+        }
+        canvas.renderAll();
+
         const dataURL = canvas.toDataURL({
             format: 'png',
             quality: 1.0
         });
 
-        const link = document.createElement('a');
-        link.href = dataURL;
-        link.download = 'downloaded-image.png';
-        console.log('Link : ' + link.href)
-        link.click();
+        localStorage.setItem('canvasState', JSON.stringify(canvas.toJSON()));
+        localStorage.setItem('canvasImageURL', dataURL);
+        setCurrentPage('FinalView')
     };
 
     useEffect(() => {
         updateComplexity(totalPoints);
     }, [totalPoints]);
 
+    const handleTextChange = (event) => {
+        setTextInput(event.target.value);
+    };
+
+    const updateText = () => {
+        const activeObject = canvas?.getActiveObject();
+        if (activeObject && activeObject.type === 'text') {
+            activeObject.set('text', textInput);
+            activeObject.set('fill', colorInput);
+            canvas.requestRenderAll();
+        }
+    };
+
+    const handleColorChange = (event) => {
+        setColorInput(event.target.value);
+    };
+
+    useEffect(() => {
+        const canvasInstance = canvas;
+        if (!canvasInstance) return;
+
+        const handleSelection = () => {
+            const selectedObject = canvasInstance.getActiveObject();
+            if (selectedObject && selectedObject.type === 'text') {
+                setTextInput(selectedObject.text);
+                setColorInput(selectedObject.fill);
+            }
+        };
+
+        canvasInstance.on('selection:created', handleSelection);
+        canvasInstance.on('selection:updated', handleSelection);
+        return () => {
+            canvasInstance.off('selection:created', handleSelection);
+            canvasInstance.off('selection:updated', handleSelection);
+        };
+    }, [canvas]);
+
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-4">
-            <div className="w-full max-w-xl">
-                <canvas
-                    ref={canvasRef}
-                    id="c"
-                    className="border border-gray-300 shadow-lg w-full h-full"
-                />
-            </div>
-            <div className="mt-8">
-                <button onClick={addRectangle} className="py-2 px-4 bg-green-400 text-white rounded mr-2">
-                    Add Rectangle
-                </button>
-                <button onClick={addTriangle} className="py-2 px-4 bg-blue-400 text-white rounded mr-2">
-                    Add Triangle
-                </button>
-                <button onClick={addCircle} className="py-2 px-4 bg-red-400 text-white rounded mr-2">
-                    Add Circle
-                </button>
-                <button onClick={addText} className="py-2 px-4 bg-yellow-400 text-white rounded mr-2">
-                    Add Text
-                </button>
-                <input type="file" accept="image/*" onChange={handleImageUpload} className="mb-4" />
-                <button
-                    onClick={handleDelete}
-                    disabled={!deleteButtonActive}
-                    className={`py-2 px-4 ${deleteButtonActive ? 'bg-red-600' : 'bg-gray-400'} text-white rounded`}
-                >
-                    Delete
-                </button>
-                <button onClick={handleDownload}>Download</button>
-            </div>
-            <div className="mt-4">
-                <p>Total Points: {totalPoints}</p>
-                <p>Design Complexity: {complexity}</p>
-                <p>PRICE: {price}</p>
-            </div>
-        </div>
+
+        <>
+            {currrentPage === 'Customization' ?
+                <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-4">
+                    <div className="mt-4 bg-gray-200 p-4 lg:w-[35%] [45%] mr-20 mb-12 rounded-lg shadow-md">
+                        <p className="text-lg font-semibold">Design Complexity: <span className="font-normal">{complexity}</span></p>
+                        <p className="text-lg font-semibold">Price: <span className="font-normal">{price}</span></p>
+                    </div>
+                    <div className="w-full max-w-xl">
+                        <canvas
+                            ref={canvasRef}
+                            id="c"
+                            className="border border-gray-300 shadow-lg w-full h-full"
+                        />
+                    </div>
+                    <div className="mt-8">
+                        <div className="flex flex-col md:flex-row items-center md:items-stretch gap-4">
+                            <input
+                                type="text"
+                                value={textInput}
+                                onChange={handleTextChange}
+                                placeholder="Edit text"
+                                className="w-full md:w-auto p-2 border border-gray-300 rounded"
+                            />
+                            <input
+                                type="color"
+                                value={colorInput}
+                                onChange={handleColorChange}
+                                className="w-full md:w-auto p-2 border border-gray-300 rounded"
+                            />
+                            <button
+                                onClick={updateText}
+                                className="py-2 px-4 bg-indigo-500 text-white rounded w-full md:w-auto"
+                            >
+                                Update Text
+                            </button>
+                        </div>
+                        <p className='text-sm text-gray-700 mb-8'>Select text to use this property</p>
+
+                        <div className="flex flex-wrap gap-4 mt-4">
+                            <button onClick={addRectangle} className="py-2 px-4 bg-green-400 text-white rounded w-full md:w-auto">
+                                Add Rectangle
+                            </button>
+                            <button onClick={addTriangle} className="py-2 px-4 bg-blue-400 text-white rounded w-full md:w-auto">
+                                Add Triangle
+                            </button>
+                            <button onClick={addCircle} className="py-2 px-4 bg-red-400 text-white rounded w-full md:w-auto">
+                                Add Circle
+                            </button>
+                            <button onClick={addText} className="py-2 px-4 bg-yellow-400 text-white rounded w-full md:w-auto">
+                                Add Text
+                            </button>
+                            <div className="relative mb-4 w-full md:w-auto">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    className="hidden"
+                                    id="fileInput"
+                                />
+                                <button
+                                    onClick={() => document.getElementById('fileInput').click()}
+                                    className="py-2 px-4 bg-green-500 text-white rounded"
+                                >
+                                    Add Image
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div className="flex flex-col md:flex-row items-center md:items-stretch gap-4 mt-4">
+                            <button
+                                onClick={handleDelete}
+                                disabled={!deleteButtonActive}
+                                className={`py-2 px-4 w-full md:w-auto ${deleteButtonActive ? 'bg-red-600' : 'bg-gray-400'} text-white rounded`}
+                            >
+                                Delete selected Obj
+                            </button>
+                            <button
+                                onClick={() => setModalVisible(true)}
+                                className="py-2 px-4 bg-blue-600 text-white rounded w-full md:w-auto"
+                            >
+                                Proceed
+                            </button>
+                        </div>
+
+                        {modalVisible && (
+                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+                                <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                                    <div className="bg-gray-800 p-4">
+                                        <h5 className="text-white text-lg font-bold">Finalize Design</h5>
+                                    </div>
+                                    <div className="p-4">
+                                        <p className="text-lg">Are you sure you want to finalize the design?</p>
+                                    </div>
+                                    <div className="bg-gray-100 p-4 flex justify-end space-x-4">
+                                        <button
+                                            type="button"
+                                            className="py-2 px-4 bg-gray-400 text-white rounded"
+                                            onClick={() => setModalVisible(false)}
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="py-2 px-4 bg-green-500 text-white rounded"
+                                            onClick={handleProceed}
+                                        >
+                                            Confirm
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                    </div>
+                </div>
+
+                : <FinalView latestPrice={price} />
+            }
+        </>
     );
 };
 
 export default Customization;
+
 
