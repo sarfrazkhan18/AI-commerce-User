@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import Navbar from '../../Components/Navbar/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 
 const Address = "Ankersgade 12C, 1, 8000 Aarhus"
@@ -8,6 +9,15 @@ const PhoneNo = "+45 71 99 77 07"
 const Email = "mail@sleeknote.com"
 
 const ContactUs = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            navigate('/login')
+        }
+    }, [])
+
     return (
         <>
             <Navbar />

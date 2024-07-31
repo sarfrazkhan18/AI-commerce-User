@@ -28,10 +28,8 @@ const Login = () => {
             }, { withCredentials: true });
 
             if (response.status === 200) {
-                console.log('hello')
                 const userId = response.data.userId;
                 localStorage.setItem('userId', userId)
-                console.log(' hello 2')
                 navigate('/');
             }
         } catch (error) {

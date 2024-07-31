@@ -21,13 +21,6 @@ const Home = () => {
         }
     }, [])
 
-
-
-    useEffect(() => {
-        console.log(imageUrl)
-    }, [imageUrl])
-
-
     const handleChange = (e) => {
         setPrompt(e.target.value);
     };
@@ -48,14 +41,20 @@ const Home = () => {
 
         try {
             const response = await axiosInstance.post('/user/image-generate', { prompt });
+            console.log(response)
             if (response.status === 200) {
                 console.log(response)
                 setImageUrl(response.data.filePath);
                 setPrompt('')
-            } else {
+            }
+            else {
                 setError('Failed to generate image. Please try again.');
             }
         } catch (error) {
+            if (error.response.status === 401) {
+                localStorage.removeItem('userId');
+                navigate('/login')
+            }
             setError('Error generating image. Please try again.');
         } finally {
             setLoading(false);

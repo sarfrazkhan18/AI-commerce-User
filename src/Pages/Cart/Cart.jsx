@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../axios';
 import Navbar from '../../Components/Navbar/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
+    const navigate = useNavigate()
+
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -12,9 +15,13 @@ const Cart = () => {
             try {
                 const userId = localStorage.getItem('userId');
                 const response = await axiosInstance.get(`/user/get-cart/${userId}`);
-                console.log(response.data.items)
+                console.log(response)
                 setCartItems(response.data.items);
             } catch (err) {
+                if (err.response.status === 401) {
+                    localStorage.removeItem('userId');
+                    navigate('/login')
+                }
                 setError('Failed to fetch cart items.');
             } finally {
                 setLoading(false);

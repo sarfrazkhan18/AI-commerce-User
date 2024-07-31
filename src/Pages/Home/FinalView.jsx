@@ -4,13 +4,18 @@ import { useNavigate } from 'react-router-dom';
 
 const FinalView = ({ latestPrice }) => {
     const navigate = useNavigate()
-
-
     const [userId, setUserId] = useState(localStorage.getItem('userId'));
     const [finalImage, setFinalImage] = useState(localStorage.getItem('canvasImageURL'));
     const [price, setPrice] = useState(latestPrice);
     const [errors, setErrors] = useState({});
     const imageRef = useRef(null);
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            navigate('/login')
+        }
+    }, [])
 
     const base64ToBlob = (base64, mime) => {
         const byteCharacters = atob(base64);
@@ -63,6 +68,10 @@ const FinalView = ({ latestPrice }) => {
                         // Handle success actions if needed
                     }
                 } catch (cartError) {
+                    if (cartError.response.status === 401) {
+                        localStorage.removeItem('userId');
+                        navigate('/login')
+                    }
                     console.log(cartError.response);
                     if (cartError.response && cartError.response.data.errors) {
                         const backendErrors = {};
@@ -76,7 +85,10 @@ const FinalView = ({ latestPrice }) => {
                 }
             }
         } catch (uploadError) {
-            console.log(uploadError.response);
+            if (uploadError.response.status === 401) {
+                localStorage.removeItem('userId');
+                navigate('/login')
+            }
             if (uploadError.response && uploadError.response.data.error) {
                 setErrors({ general: uploadError.response.data.error });
             } else {

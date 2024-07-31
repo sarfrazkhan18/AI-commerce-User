@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as fabric from 'fabric';
 import { BASE_PRICE, MEDIUM_PRICE, HIGH_PRICE } from '../constants';
 import FinalView from './FinalView';
+import { useNavigate } from 'react-router-dom';
 
 const Customization = ({ imageUrl }) => {
+    const navigate = useNavigate()
 
     const canvasRef = useRef(null);
     const [canvas, setCanvas] = useState(null);
@@ -20,6 +22,13 @@ const Customization = ({ imageUrl }) => {
     const [currrentPage, setCurrentPage] = useState('Customization')
     const [colorInput, setColorInput] = useState('#000000'); // Default color
     const [textInput, setTextInput] = useState('')
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            navigate('/login')
+        }
+    }, [])
 
     useEffect(() => {
         if (complexity === 'Basic') {
