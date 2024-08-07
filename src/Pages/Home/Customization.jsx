@@ -42,8 +42,8 @@ const Customization = ({ imageUrl }) => {
 
     useEffect(() => {
         const fabricCanvas = new fabric.Canvas(canvasRef.current, {
-            width: 500,
-            height: 500,
+            width: 400,
+            height: 400,
             isDrawingMode: false,
             allowTouchScrolling: true,
         });
@@ -428,19 +428,21 @@ const Customization = ({ imageUrl }) => {
 
         <>
             {currrentPage === 'Customization' ?
-                <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-4">
-                    <div className="mt-4 bg-gray-200 p-4 lg:w-[35%] [45%] mr-20 mb-12 rounded-lg shadow-md">
-                        <p className="text-lg font-semibold">Design Complexity: <span className="font-normal">{complexity}</span></p>
-                        <p className="text-lg font-semibold">Price: <span className="font-normal">{price}</span></p>
+                <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gray-100 py-4">
+                    <div>
+                        <div className="mt-4 bg-gray-200 p-4 lg:w-[100%] max-sm:ml-8 [45%] mr-20 mb-12 rounded-lg shadow-md">
+                            <p className="text-lg font-semibold">Design Complexity: <span className="font-normal">{complexity}</span></p>
+                            <p className="text-lg font-semibold">Price: <span className="font-normal">{price}</span></p>
+                        </div>
+                        <div className="w-full max-w-xl">
+                            <canvas
+                                ref={canvasRef}
+                                id="c"
+                                className="border border-gray-300 shadow-lg w-full h-full"
+                            />
+                        </div>
                     </div>
-                    <div className="w-full max-w-xl">
-                        <canvas
-                            ref={canvasRef}
-                            id="c"
-                            className="border border-gray-300 shadow-lg w-full h-full"
-                        />
-                    </div>
-                    <div className="mt-8">
+                    <div className="mt-8 lg:ml-12">
                         <div className="flex flex-col md:flex-row items-center md:items-stretch gap-4">
                             <input
                                 type="text"
