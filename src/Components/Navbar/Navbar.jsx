@@ -69,7 +69,7 @@ const Navbar = () => {
     };
 
     return (
-        <header className="bg-white shadow-md border-b-[3px] border-black">
+        <header className="bg-white shadow-md border-b-[1px] border-black">
             <nav className="container mx-auto p-4 flex justify-between items-center relative">
                 <Link to="/" className="flex items-center" onClick={handleLinkClick}>
                     <h1 className='text-2xl font-semibold'>Printful PK</h1>

@@ -3,6 +3,8 @@ import * as fabric from 'fabric';
 import { BASE_PRICE, MEDIUM_PRICE, HIGH_PRICE } from '../constants';
 import FinalView from './FinalView';
 import { useNavigate } from 'react-router-dom';
+import { MoveRight } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 
 const Customization = ({ imageUrl }) => {
     const navigate = useNavigate()
@@ -65,10 +67,10 @@ const Customization = ({ imageUrl }) => {
             fabricCanvas.add(img);
 
             const editableArea = new fabric.Rect({
-                left: fabricCanvas.width * 0.25,
+                left: fabricCanvas.width * 0.2,
                 top: fabricCanvas.height * 0.15,
-                width: fabricCanvas.width * 0.5,
-                height: fabricCanvas.height * 0.7,
+                width: fabricCanvas.width * 0.6,
+                height: fabricCanvas.height * 0.75,
                 fill: 'rgba(255, 255, 255, 0)',
                 stroke: '#e6e3e3',
                 strokeWidth: 0.3,
@@ -428,9 +430,9 @@ const Customization = ({ imageUrl }) => {
 
         <>
             {currrentPage === 'Customization' ?
-                <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gray-100 py-4">
+                <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-white py-4">
                     <div>
-                        <div className="mt-4 bg-gray-200 p-4 lg:w-[100%] max-sm:ml-8 [45%] mr-20 mb-12 rounded-lg shadow-md">
+                        <div className="mt-4 bg-gray-100 p-4 lg:w-[100%] max-sm:ml-8 [45%] mr-20 mb-12 rounded-lg shadow-md">
                             <p className="text-lg font-semibold">Design Complexity: <span className="font-normal">{complexity}</span></p>
                             <p className="text-lg font-semibold">Price: <span className="font-normal">{price}</span></p>
                         </div>
@@ -501,26 +503,28 @@ const Customization = ({ imageUrl }) => {
                             <button
                                 onClick={handleDelete}
                                 disabled={!deleteButtonActive}
-                                className={`py-2 px-4 w-full md:w-auto ${deleteButtonActive ? 'bg-red-600' : 'bg-gray-400'} text-white rounded`}
+                                className={`flex py-2 px-4 w-full md:w-auto ${deleteButtonActive ? 'bg-red-600' : 'bg-gray-400'} text-white rounded`}
                             >
                                 Delete selected Obj
-                            </button>
-                            <button
-                                onClick={() => setModalVisible(true)}
-                                className="py-2 px-4 bg-blue-600 text-white rounded w-full md:w-auto"
-                            >
-                                Proceed
+                                <Trash2 className='ml-4 w-5 text-white' />
                             </button>
                         </div>
+                        <button
+                            onClick={() => setModalVisible(true)}
+                            className="flex mt-8 py-2 px-4 bg-blue-600 text-white rounded w-full md:w-auto"
+                        >
+                            Proceed
+                            <MoveRight className='ml-4 w-5' />
+                        </button>
 
                         {modalVisible && (
                             <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
                                 <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
                                     <div className="bg-gray-800 p-4">
-                                        <h5 className="text-white text-lg font-bold">Finalize Design</h5>
+                                        <h5 className="text-white text-lg font-bold">Proceed towards Cart</h5>
                                     </div>
                                     <div className="p-4">
-                                        <p className="text-lg">Are you sure you want to finalize the design?</p>
+                                        <p className="text-lg">Are you sure your design is final?</p>
                                     </div>
                                     <div className="bg-gray-100 p-4 flex justify-end space-x-4">
                                         <button

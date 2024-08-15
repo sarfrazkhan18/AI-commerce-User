@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axiosInstance from '../../axios';
 import { useNavigate } from 'react-router-dom';
+import { ShoppingCart } from 'lucide-react';
 
 const FinalView = ({ latestPrice }) => {
     const navigate = useNavigate()
@@ -105,9 +106,10 @@ const FinalView = ({ latestPrice }) => {
             <div className="w-full md:w-1/3 flex flex-col items-center justify-center p-4">
                 <button
                     onClick={handleAddToCart}
-                    className="mt-4 md:mt-0 bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-700"
+                    className="mt-4 flex md:mt-0 bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-700"
                 >
                     Add to Cart
+                    <ShoppingCart className='ml-4 w-5 text-white' />
                 </button>
                 {errors.general && <p className="text-xs text-red-500 mt-1">{errors.general}</p>}
             </div>

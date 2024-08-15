@@ -66,75 +66,18 @@ const Home = () => {
     };
 
     return (
-        // <div>
-        //     <Navbar />
-        //     {
-        //         page === 'home' ?
-        //             <div className="flex flex-col lg:flex-row h-screen lg:h-[640px] bg-gray-900 text-white">
-        //                 {/* Left Section */}
-        //                 <div className="w-full lg:w-1/3 p-8 space-y-4 lg:ml-20">
-        //                     <h1 className="text-3xl font-bold">Image Generator</h1>
-        //                     <p>Create Stunning AI Generated Images</p>
-        //                     <div>
-        //                         <textarea
-        //                             className="w-full p-2 mt-4 bg-gray-800 border border-gray-700 rounded"
-        //                             rows="4"
-        //                             placeholder="Describe an image you want to generate..."
-        //                             value={prompt}
-        //                             onChange={handleChange}
-        //                         ></textarea>
-        //                         {error && <p className="text-red-500 mt-2">{error}</p>}
-        //                     </div>
-        //                     <button
-        //                         className={`w-full px-4 py-2 rounded mt-4 ${loading ? 'bg-gray-600' : 'bg-green-600'} ${loading ? 'cursor-not-allowed' : ''}`}
-        //                         onClick={handleGenerate}
-        //                         disabled={loading}
-        //                     >
-        //                         {loading ? 'Generating...' : 'Generate Design'}
-        //                     </button>
-        //                 </div>
-
-        //                 {/* Right Section */}
-        //                 <div className="w-full lg:w-1/2 lg:ml-auto p-8">
-        //                     <div className="h-[50vh] lg:h-[80%] flex items-center justify-center">
-        //                         {imageUrl ? (
-        //                             <div className='flex flex-col'>
-        //                                 <img src={imageUrl} alt="Generated" id="canvas-image" className="h-[500px] mt-16 w-auto" />
-        //                                 <button
-        //                                     className={`w-full px-4 py-2 rounded mt-4 ${'bg-green-600'}`}
-        //                                     onClick={handleCustomize}
-        //                                 >
-        //                                     Customize this design
-        //                                 </button>
-        //                             </div>
-        //                         ) : (
-        //                             <>
-        //                             </>
-        //                         )}
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //             :
-        //             <Customization
-        //                 imageUrl={imageUrl}
-        //             // imageUrl="https://files.cdn.printful.com/o/upload/variant-image/10/10189fe28c2138b039a32d0096f853f0_l"
-        //             />
-        //     }
-        // </div>
-
-
         <div>
             <Navbar />
             {
                 page === 'home' ?
-                    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-900 text-white">
+                    <div className="flex flex-col lg:flex-row min-h-screen bg-white text-black">
                         {/* Left Section */}
                         <div className="w-full lg:w-1/3 p-8 space-y-4 lg:ml-20">
-                            <h1 className="text-3xl font-bold">Image Generator</h1>
-                            <p>Create Stunning AI Generated Images</p>
+                            <h1 className="text-3xl font-bold">Shirt Design Generator</h1>
+                            <p>Create Stunning AI Generated Shirt Designs</p>
                             <div>
                                 <textarea
-                                    className="w-full p-2 mt-4 bg-gray-800 border border-gray-700 rounded"
+                                    className="w-full p-2 mt-4 border border-gray-700 rounded"
                                     rows="4"
                                     placeholder="Describe an image you want to generate..."
                                     value={prompt}
