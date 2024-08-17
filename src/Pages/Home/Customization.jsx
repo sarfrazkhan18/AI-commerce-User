@@ -22,7 +22,7 @@ const Customization = ({ imageUrl }) => {
     const [deleteButtonActive, setDeleteButtonActive] = useState(false);
     const [modalVisible, setModalVisible] = useState(false)
     const [currrentPage, setCurrentPage] = useState('Customization')
-    const [colorInput, setColorInput] = useState('#000000'); // Default color
+    const [colorInput, setColorInput] = useState('#000000');
     const [textInput, setTextInput] = useState('')
 
     useEffect(() => {

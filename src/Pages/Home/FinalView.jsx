@@ -37,15 +37,14 @@ const FinalView = ({ latestPrice }) => {
 
     const handleAddToCart = async (e) => {
         e.preventDefault();
-        setErrors({}); // Clear previous errors
+        setErrors({});
 
         const base64Data = finalImage.replace(/^data:image\/[a-z]+;base64,/, '');
-        const blob = base64ToBlob(base64Data, 'image/png'); // Adjust MIME type as needed
+        const blob = base64ToBlob(base64Data, 'image/png');
         const formData = new FormData();
         formData.append('image', blob, 'image.png');
 
         try {
-            // Upload the image
             const uploadResponse = await axiosInstance.post('/user/upload-image', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -55,7 +54,6 @@ const FinalView = ({ latestPrice }) => {
             if (uploadResponse.status === 200) {
                 const imageUrl = uploadResponse.data.imageUrl;
 
-                // Add to cart
                 try {
                     const cartResponse = await axiosInstance.post('/user/add-to-cart', {
                         userId: userId,
@@ -66,7 +64,6 @@ const FinalView = ({ latestPrice }) => {
                     if (cartResponse.status === 200) {
                         alert('Item added to cart');
                         navigate('/cart')
-                        // Handle success actions if needed
                     }
                 } catch (cartError) {
                     if (cartError.response.status === 401) {

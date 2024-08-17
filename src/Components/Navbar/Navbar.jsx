@@ -60,7 +60,6 @@ const Navbar = () => {
                 localStorage.removeItem('canvasState');
                 localStorage.removeItem('userId');
                 setIsAuthenticated(false);
-                console.log('success')
                 navigate('/login');
             }
         } catch (error) {

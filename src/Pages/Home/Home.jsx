@@ -26,7 +26,6 @@ const Home = () => {
     };
 
     const handleGenerate = async () => {
-        // Validation
         if (!prompt) {
             setError('Prompt cannot be empty.');
             return;
@@ -35,15 +34,12 @@ const Home = () => {
             return;
         }
 
-        // Clear previous errors
         setError('');
         setLoading(true);
 
         try {
             const response = await axiosInstance.post('/user/image-generate', { prompt });
-            console.log(response)
             if (response.status === 200) {
-                console.log(response)
                 setImageUrl(response.data.filePath);
                 setPrompt('')
             }
@@ -71,7 +67,6 @@ const Home = () => {
             {
                 page === 'home' ?
                     <div className="flex flex-col lg:flex-row min-h-screen bg-white text-black">
-                        {/* Left Section */}
                         <div className="w-full lg:w-1/3 p-8 space-y-4 lg:ml-20">
                             <h1 className="text-3xl font-bold">Shirt Design Generator</h1>
                             <p>Create Stunning AI Generated Shirt Designs</p>
@@ -94,7 +89,6 @@ const Home = () => {
                             </button>
                         </div>
 
-                        {/* Right Section */}
                         <div className="w-full lg:w-1/2 lg:ml-auto p-8">
                             <div className="h-72 lg:h-[80%] flex items-center justify-center">
                                 {imageUrl ? (
