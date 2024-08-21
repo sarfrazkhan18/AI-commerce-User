@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axiosInstance from '../../axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../Components/Navbar/Navbar';
+import Cookie from 'js-cookie';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -28,6 +29,7 @@ const Login = () => {
             }, { withCredentials: true });
 
             if (response.status === 200) {
+                Cookie.set('userToken', response.data.userToken)
                 const userId = response.data.userId;
                 localStorage.setItem('userId', userId)
                 navigate('/');

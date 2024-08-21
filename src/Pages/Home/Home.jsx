@@ -14,6 +14,9 @@ const Home = () => {
     const [error, setError] = useState('');
     const [page, setPage] = useState('home');
 
+
+    // console.log(Cookie.get('userToken'))
+
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (!userId) {

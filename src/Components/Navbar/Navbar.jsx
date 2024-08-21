@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axios';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
     const [navOpen, setNavOpen] = useState(false);
@@ -54,6 +55,7 @@ const Navbar = () => {
             const response = await axiosInstance.get('/user/logout');
             
             if (response.status === 200) {
+                Cookies.remove('userToken')
                 localStorage.removeItem('userId');
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('canvasImageURL');
