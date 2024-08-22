@@ -101,6 +101,14 @@ const Home = () => {
                             >
                                 {loading ? 'Generating...' : 'Generate Design'}
                             </button>
+                            <div>
+                                <span>
+                                    Disclamiar :
+                                </span>
+                                <p className='text-red-500'>
+                                    The designs are AI generated so 100% cloning will be impossible in some cases
+                                </p>
+                            </div>
                         </div>
 
                         <div className="w-full lg:w-1/2 lg:ml-auto p-8">

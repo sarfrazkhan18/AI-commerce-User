@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://813179e9-fd42-42fb-bd48-a3b9786dc682-00-g0f4ar0562hs.janeway.replit.dev/',
+    baseURL: 'https://ai-commerce-backend-1-sarfrazkhan18.replit.app/',
     withCredentials: true,
 });
 

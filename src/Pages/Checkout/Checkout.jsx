@@ -43,7 +43,8 @@ const Checkout = ({ cartItems, userId, cartId }) => {
         };
 
         try {
-            const response = await axiosInstance.post('/user/place-order', payload);
+            await axiosInstance.post('/user/place-order', payload);
+            alert('Order Placed, Our team will contact you soon')
             navigate('/');
         } catch (err) {
             console.error('Error placing order:', err);
