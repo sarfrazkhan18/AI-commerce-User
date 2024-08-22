@@ -141,7 +141,7 @@ const Checkout = ({ cartItems, userId, cartId }) => {
                                 required
                             >
                                 <option value="COD">Cash on Delivery</option>
-                                <option value="WhatsApp">Proceed to WhatsApp</option>
+                                {/* <option value="WhatsApp">Proceed to WhatsApp</option> */}
                             </select>
                         </div>
                         <button
