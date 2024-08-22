@@ -3,6 +3,7 @@ import axiosInstance from '../../axios';
 import Customization from './Customization';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../Components/Navbar/Navbar';
+import Cookies from 'js-cookie';
 
 const Home = () => {
 
@@ -14,14 +15,25 @@ const Home = () => {
     const [error, setError] = useState('');
     const [page, setPage] = useState('home');
 
-
-    // console.log(Cookie.get('userToken'))
-
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (!userId) {
             navigate('/login')
         }
+    }, [])
+
+    useEffect(() => {
+        const handleGenerate = async () => {
+            try {
+                await axiosInstance.get('/user/check-auth');
+            } catch (error) {
+                if (error.response.status === 401) {
+                    localStorage.removeItem('userId');
+                    navigate('/login')
+                }
+            }
+        }
+        handleGenerate()
     }, [])
 
     const handleChange = (e) => {
