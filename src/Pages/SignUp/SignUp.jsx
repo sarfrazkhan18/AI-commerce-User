@@ -35,7 +35,7 @@ const Signup = () => {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password
-            });
+            }, { withCredentials: true });
 
             if (response.status === 200) {
                 navigate('/login');
