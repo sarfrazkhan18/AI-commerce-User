@@ -21,19 +21,19 @@ const Home = () => {
         }
     }, [])
 
-    useEffect(() => {
-        const handleGenerate = async () => {
-            try {
-                await axiosInstance.get('/user/check-auth');
-            } catch (error) {
-                if (error.response.status === 401) {
-                    localStorage.removeItem('userId');
-                    navigate('/login')
-                }
-            }
-        }
-        handleGenerate()
-    }, [])
+    // useEffect(() => {
+    //     const handleGenerate = async () => {
+    //         try {
+    //             await axiosInstance.get('/user/check-auth');
+    //         } catch (error) {
+    //             if (error.response.status === 401) {
+    //                 localStorage.removeItem('userId');
+    //                 navigate('/login')
+    //             }
+    //         }
+    //     }
+    //     handleGenerate()
+    // }, [])
 
     const handleChange = (e) => {
         setPrompt(e.target.value);
