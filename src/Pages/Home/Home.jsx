@@ -14,26 +14,21 @@ const Home = () => {
     const [error, setError] = useState('');
     const [page, setPage] = useState('home');
 
-    useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        if (!userId) {
-            navigate('/login')
-        }
-    }, [])
 
-    // useEffect(() => {
-    //     const handleGenerate = async () => {
-    //         try {
-    //             await axiosInstance.get('/user/check-auth');
-    //         } catch (error) {
-    //             if (error.response.status === 401) {
-    //                 localStorage.removeItem('userId');
-    //                 navigate('/login')
-    //             }
-    //         }
-    //     }
-    //     handleGenerate()
-    // }, [])
+    useEffect(() => {
+        const handleVerify = async () => {
+            try {
+                console.log('Hello')
+                await axiosInstance.get('/user/verify');
+            } catch (error) {
+                console.log('Err')
+                if (error.response.status === 401 || !localStorage.getItem('userId')) {
+                    navigate('/login')
+                }
+            }
+        }
+        handleVerify()
+    }, [])
 
     const handleChange = (e) => {
         setPrompt(e.target.value);

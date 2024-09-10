@@ -51,6 +51,7 @@ const Cart = () => {
     const handleDeleteConfirm = async () => {
         try {
             setLoading(true);
+            console.log(itemToDelete._id + "   " + userId)
             await axiosInstance.delete(`/user/delete-cart-item/${itemToDelete._id}/${userId}`);
             setCartItems(cartItems.filter(cartItem => cartItem._id !== itemToDelete._id));
             setIsModalOpen(false);
