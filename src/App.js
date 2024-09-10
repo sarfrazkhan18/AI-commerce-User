@@ -5,6 +5,7 @@ import Login from './Pages/Login/Login';
 import Home from './Pages/Home/Home';
 import Cart from './Pages/Cart/Cart';
 import ContactUs from './Pages/ContactUs/ContactUs';
+import LoginHere from './Pages/LoginHere/LoginHere';
 
 function App() {
 
@@ -12,10 +13,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/' element={<Home />} />
+        {/* <Route path='/login' element={<Login />} /> */}
+        {/* <Route path='/' element={<Home />} /> */}
         <Route path='/cart' element={<Cart />} />
         <Route path='/contact' element={<ContactUs />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<LoginHere />} />
       </Routes>
     </BrowserRouter>
   );

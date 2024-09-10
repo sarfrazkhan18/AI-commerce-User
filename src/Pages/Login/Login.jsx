@@ -52,8 +52,10 @@ const Login = () => {
 
     return (
         <>
-            <Navbar />
-            <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-400 to-blue-500">
+            {/* <Navbar /> */}
+
+            <div className="flex justify-center items-center min-h-screen bg-[#F5F4FE]">
+                {/* <h1 className=' text-xl font-black'> Welcome to PK printful </h1> */}
                 <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
                     <h2 className="text-2xl font-bold mb-6 text-center">Login to Your Account</h2>
                     <form className="space-y-4" onSubmit={handleSubmit}>
@@ -83,7 +85,7 @@ const Login = () => {
                             />
                             {errors.password && <p className="text-xs text-red-500 mt-1">{errors.password}</p>}
                         </div>
-                        <button type="submit" className="w-full py-2 px-4 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Login</button>
+                        <button type="submit" className="w-full py-2 px-4 bg-[#BC2B43] text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Login</button>
                         {errors.general && <p className="text-xs text-red-500 mt-1">{errors.general}</p>}
                     </form>
                 </div>

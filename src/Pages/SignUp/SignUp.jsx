@@ -41,6 +41,7 @@ const Signup = () => {
                 navigate('/login');
             }
         } catch (error) {
+            console.log(error.response)
             if (error.response && error.response.data.errors) {
                 const backendErrors = {};
                 error.response.data.errors.forEach(err => {
@@ -76,7 +77,7 @@ const Signup = () => {
     return (
         <>
             <Navbar />
-            <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-green-400 to-blue-500">
+            <div className="flex justify-center items-center min-h-screen bg-[#F5F4FE]">
                 <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
                     <h2 className="text-2xl font-bold mb-6 text-center">Create an Account</h2>
                     <form className="space-y-4" onSubmit={handleSubmit}>
@@ -132,7 +133,7 @@ const Signup = () => {
                             />
                             {errors.confirmPassword && <p className="text-xs text-red-500 mt-1">{errors.confirmPassword}</p>}
                         </div>
-                        <button type="submit" className="w-full py-2 px-4 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Sign Up</button>
+                        <button type="submit" className="w-full py-2 px-4 bg-[#BC2B43] text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Sign Up</button>
                         {errors.general && <p className="text-xs text-red-500 mt-1">{errors.general}</p>}
                     </form>
                 </div>

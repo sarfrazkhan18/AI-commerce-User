@@ -58,7 +58,7 @@ const Checkout = ({ cartItems, userId, cartId }) => {
         <div className="min-h-screen bg-gray-100">
             <Navbar />
             <div className="container mx-auto p-4">
-                <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
+                <h2 className="text-2xl font-semibold mb-4 text-center">Order Summary</h2>
 
                 <div className="bg-white shadow-md rounded-lg p-4 mb-4">
                     {cartItems.map((item, index) => (
@@ -78,80 +78,83 @@ const Checkout = ({ cartItems, userId, cartId }) => {
                     </div>
                 </div>
 
-                <div className="bg-white shadow-md rounded-lg p-4">
-                    <h3 className="text-xl font-semibold mb-4">Delivery Information</h3>
-                    <form className="space-y-4" onSubmit={handleSubmit}>
-                        <div className="flex flex-col md:flex-row md:space-x-4">
-                            <div className="flex-1">
-                                <label className="block text-gray-700">Full Name</label>
+                <div className="bg-white shadow-md rounded-lg p-4 lg:px-24 ">
+                    <h3 className="text-xl font-semibold  text-center mb-8">Delivery Information</h3>
+                    <div className='bg-gray-100 px-12 py-10'>
+                        <form className="space-y-4 " onSubmit={handleSubmit}>
+                            <div className="flex flex-col md:flex-row md:space-x-4">
+                                <div className="flex-1">
+                                    <label className="block text-gray-700">Full Name</label>
+                                    <input
+                                        type="text"
+                                        name="fullName"
+                                        value={formData.fullName}
+                                        onChange={handleChange}
+                                        className="w-full border border-gray-300 rounded-md p-2 mt-1"
+                                        placeholder="Enter your full name"
+                                        required
+                                    />
+                                </div>
+                                <div className="flex-1">
+                                    <label className="block text-gray-700">Phone Number</label>
+                                    <input
+                                        type="text"
+                                        name="phoneNumber"
+                                        value={formData.phoneNumber}
+                                        onChange={handleChange}
+                                        className="w-full border border-gray-300 rounded-md p-2 mt-1"
+                                        placeholder="Enter your phone number"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-gray-700">Address</label>
                                 <input
                                     type="text"
-                                    name="fullName"
-                                    value={formData.fullName}
+                                    name="address"
+                                    value={formData.address}
                                     onChange={handleChange}
                                     className="w-full border border-gray-300 rounded-md p-2 mt-1"
-                                    placeholder="Enter your full name"
+                                    placeholder="Enter your delivery address"
                                     required
                                 />
                             </div>
-                            <div className="flex-1">
-                                <label className="block text-gray-700">Phone Number</label>
+                            <div>
+                                <label className="block text-gray-700">City</label>
                                 <input
                                     type="text"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
+                                    name="city"
+                                    value={formData.city}
                                     onChange={handleChange}
                                     className="w-full border border-gray-300 rounded-md p-2 mt-1"
-                                    placeholder="Enter your phone number"
+                                    placeholder="Enter your city"
                                     required
                                 />
                             </div>
-                        </div>
-                        <div>
-                            <label className="block text-gray-700">Address</label>
-                            <input
-                                type="text"
-                                name="address"
-                                value={formData.address}
-                                onChange={handleChange}
-                                className="w-full border border-gray-300 rounded-md p-2 mt-1"
-                                placeholder="Enter your delivery address"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-gray-700">City</label>
-                            <input
-                                type="text"
-                                name="city"
-                                value={formData.city}
-                                onChange={handleChange}
-                                className="w-full border border-gray-300 rounded-md p-2 mt-1"
-                                placeholder="Enter your city"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-gray-700">Payment Method</label>
-                            <select
-                                name="paymentMethod"
-                                value={formData.paymentMethod}
-                                onChange={handleChange}
-                                className="w-full border border-gray-300 rounded-md p-2 mt-1"
-                                required
+                            <div>
+                                <label className="block text-gray-700">Payment Method</label>
+                                <select
+                                    name="paymentMethod"
+                                    value={formData.paymentMethod}
+                                    onChange={handleChange}
+                                    className="w-full border border-gray-300 rounded-md p-2 mt-1"
+                                    required
+                                >
+                                    <option value="COD">Cash on Delivery</option>
+                                    {/* <option value="WhatsApp">Proceed to WhatsApp</option> */}
+                                </select>
+                            </div>
+
+                            <button
+                                type="submit"
+                                className={` bg-blue-600 mx-auto text-white py-2 px-5 rounded-md font-semibold hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                disabled={loading}
                             >
-                                <option value="COD">Cash on Delivery</option>
-                                {/* <option value="WhatsApp">Proceed to WhatsApp</option> */}
-                            </select>
-                        </div>
-                        <button
-                            type="submit"
-                            className={`w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            disabled={loading}
-                        >
-                            {loading ? 'Placing Order...' : 'Place Order'}
-                        </button>
-                    </form>
+                                {loading ? 'Placing Order...' : 'Place Order'}
+                            </button>
+                        </form>
+                    </div>
                     {error && <p className="text-red-500 text-center mt-4">{error}</p>}
                 </div>
             </div>

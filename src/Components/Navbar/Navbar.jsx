@@ -101,7 +101,7 @@ const Navbar = () => {
                         </>
                     ) : (
                         <>
-                            <li className="border-t max-sm:border-none lg:border-none relative">
+                            {/* <li className="border-t max-sm:border-none lg:border-none relative">
                                 <Link to="/login" className={navItemClasses('/signup')} onClick={handleLinkClick}>
                                     Login
                                 </Link>
@@ -112,7 +112,7 @@ const Navbar = () => {
                                     Sign Up
                                 </Link>
                                 <span className="underline"></span>
-                            </li>
+                            </li> */}
                         </>
                     )}
                 </ul>
