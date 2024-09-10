@@ -18,11 +18,12 @@ const Home = () => {
     useEffect(() => {
         const handleVerify = async () => {
             try {
-                console.log('Hello')
+                if (!localStorage.getItem('userId')) {
+                    navigate('/login')
+                }
                 await axiosInstance.get('/user/verify');
             } catch (error) {
-                console.log('Err')
-                if (error.response.status === 401 || !localStorage.getItem('userId')) {
+                if (error.response.status === 401) {
                     navigate('/login')
                 }
             }

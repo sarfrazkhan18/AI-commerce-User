@@ -18,6 +18,22 @@ const Cart = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
+        const handleVerify = async () => {
+            try {
+                if (!localStorage.getItem('userId')) {
+                    navigate('/login')
+                }
+                await axiosInstance.get('/user/verify');
+            } catch (error) {
+                if (error.response.status === 401) {
+                    navigate('/login')
+                }
+            }
+        }
+        handleVerify()
+    }, [])
+
+    useEffect(() => {
         const fetchCartItems = async () => {
             try {
                 const userId = localStorage.getItem('userId');
@@ -51,7 +67,6 @@ const Cart = () => {
     const handleDeleteConfirm = async () => {
         try {
             setLoading(true);
-            console.log(itemToDelete._id + "   " + userId)
             await axiosInstance.delete(`/user/delete-cart-item/${itemToDelete._id}/${userId}`);
             setCartItems(cartItems.filter(cartItem => cartItem._id !== itemToDelete._id));
             setIsModalOpen(false);
@@ -69,7 +84,9 @@ const Cart = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div>
+            <Navbar />
+            Loading...</div>;
     }
 
     return (

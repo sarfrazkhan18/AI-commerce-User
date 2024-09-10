@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import Navbar from '../../Components/Navbar/Navbar';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../axios';
 
 
 const Address = "Ankersgade 12C, 1, 8000 Aarhus"
@@ -10,7 +11,21 @@ const Email = "mail@sleeknote.com"
 
 const ContactUs = () => {
     const navigate = useNavigate();
-
+    useEffect(() => {
+        const handleVerify = async () => {
+            try {
+                if (!localStorage.getItem('userId')) {
+                    navigate('/login')
+                }
+                await axiosInstance.get('/user/verify');
+            } catch (error) {
+                if (error.response.status === 401) {
+                    navigate('/login')
+                }
+            }
+        }
+        handleVerify()
+    }, [])
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (!userId) {
