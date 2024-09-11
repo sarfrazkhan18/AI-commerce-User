@@ -54,7 +54,7 @@ const Login = () => {
         <>
             {/* <Navbar /> */}
 
-            <div className="flex justify-center items-center min-h-screen bg-[#F5F4FE]">
+            <div className="flex justify-center items-center min-h-screen max-sm:min-h-96 bg-[#F5F4FE]">
                 {/* <h1 className=' text-xl font-black'> Welcome to PK printful </h1> */}
                 <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
                     <h2 className="text-2xl font-bold mb-6 text-center">Login to Your Account</h2>

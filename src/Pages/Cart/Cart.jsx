@@ -39,15 +39,16 @@ const Cart = () => {
             try {
                 const userId = localStorage.getItem('userId');
                 const response = await axiosInstance.get(`/user/get-cart/${userId}`);
+                console.log(response)
                 setCartId(response.data._id);
                 setUserId(response.data.userId);
                 setCartItems(response.data.items);
             } catch (err) {
+                console.log(err)
                 if (err.response?.status === 401) {
                     localStorage.removeItem('userId');
                     navigate('/login');
                 }
-                setError('Failed to fetch cart items.');
             } finally {
                 setLoading(false);
             }

@@ -136,6 +136,13 @@ const Signup = () => {
                         <button type="submit" className="w-full py-2 px-4 bg-[#BC2B43] text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">Sign Up</button>
                         {errors.general && <p className="text-xs text-red-500 mt-1">{errors.general}</p>}
                     </form>
+                    <div className='flex justify-center my-8'>
+                        Or
+                    </div>
+
+                    <button className="w-full py-2 px-4 bg-[#BC2B43] text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                        onClick={() => navigate('/login')}
+                    >Login</button>
                 </div>
             </div>
         </>
