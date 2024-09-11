@@ -6,11 +6,13 @@ import Home from './Pages/Home/Home';
 import Cart from './Pages/Cart/Cart';
 import ContactUs from './Pages/ContactUs/ContactUs';
 import LoginHere from './Pages/LoginHere/LoginHere';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
   return (
     <BrowserRouter>
+      <Toaster />
       <Routes>
         <Route path='/signup' element={<SignUp />} />
         {/* <Route path='/login' element={<Login />} /> */}

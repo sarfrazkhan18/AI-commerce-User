@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import axiosInstance from '../../axios';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const FinalView = ({ latestPrice }) => {
     const navigate = useNavigate()
@@ -62,7 +63,7 @@ const FinalView = ({ latestPrice }) => {
                     }, { withCredentials: true });
 
                     if (cartResponse.status === 200) {
-                        alert('Item added to cart');
+                        toast.success('Item added to cart');
                         navigate('/cart')
                     }
                 } catch (cartError) {
@@ -70,7 +71,6 @@ const FinalView = ({ latestPrice }) => {
                         localStorage.removeItem('userId');
                         navigate('/login')
                     }
-                    console.log(cartError.response);
                     if (cartError.response && cartError.response.data.errors) {
                         const backendErrors = {};
                         cartError.response.data.errors.forEach((err) => {

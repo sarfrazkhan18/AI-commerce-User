@@ -20,6 +20,7 @@ const ContactUs = () => {
                 await axiosInstance.get('/user/verify');
             } catch (error) {
                 if (error.response.status === 401) {
+                    localStorage.removeItem('userId')
                     navigate('/login')
                 }
             }

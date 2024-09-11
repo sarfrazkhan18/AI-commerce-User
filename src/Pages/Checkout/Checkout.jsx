@@ -59,7 +59,6 @@ const Checkout = ({ cartItems, userId, cartId }) => {
             <Navbar />
             <div className="container mx-auto p-4">
                 <h2 className="text-2xl font-semibold mb-4 text-center">Order Summary</h2>
-
                 <div className="bg-white shadow-md rounded-lg p-4 mb-4">
                     {cartItems.map((item, index) => (
                         <div key={item._id} className="flex flex-col md:flex-row justify-between items-center mb-4">
